@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend",
-    "start": "npm run build --workspace=frontend && npm run start --workspace=backend",
+    "start": "npm i --workspaces && npm run build --workspace=frontend && npm run start --workspace=backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
