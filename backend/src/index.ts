@@ -23,7 +23,7 @@ app.use(
 
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
-
+app.use(express.static('../frontend/dist'))
 app.listen(3000, () => {
   console.log('Server running on port 3000')
 })
