@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser'
 import userRoutes from './routes/users'
 import authRoutes from './routes/auth'
 
+const PORT = process.env.PORT ?? 3000
+
 mongoose.connect(process.env.MONGO_CONNECTION_STRING as string)
 
 const app = express()
@@ -24,6 +26,6 @@ app.use(
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use(express.static('../frontend/dist'))
-app.listen(3000, () => {
-  console.log('Server running on port 3000')
+app.listen(PORT, () => {
+  console.log('Server running on port ' + PORT)
 })
