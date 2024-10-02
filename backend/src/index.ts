@@ -1,7 +1,10 @@
+import path from 'node:path'
+
+import 'dotenv/config'
+
 import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
-import 'dotenv/config'
 import cookieParser from 'cookie-parser'
 
 import userRoutes from './routes/users'
@@ -22,10 +25,10 @@ app.use(
     credentials: true,
   })
 )
+app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
-app.use(express.static('../frontend/dist'))
 app.listen(PORT, () => {
   console.log('Server running on port ' + PORT)
 })

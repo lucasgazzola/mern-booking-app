@@ -19,13 +19,15 @@ router.post(
   async (req: Request, res: Response) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ message: errors.array() })
+      res.status(400).json({ message: errors.array() })
+      return
     }
     try {
       let user = await User.findOne({ email: req.body.email })
 
       if (user) {
-        return res.status(400).json({ message: 'User already exists' })
+        res.status(400).json({ message: 'User already exists' })
+        return
       }
 
       user = new User(req.body)
@@ -43,10 +45,12 @@ router.post(
         maxAge: 86400000,
       })
 
-      return res.status(200).send({ message: 'User registered OK' })
+      res.status(200).send({ message: 'User registered OK' })
+      return
     } catch (error) {
       console.log(error)
-      return res.status(500).json({ message: 'Something went wrong' })
+      res.status(500).json({ message: 'Something went wrong' })
+      return
     }
   }
 )
