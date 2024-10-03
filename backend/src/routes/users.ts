@@ -1,9 +1,9 @@
-import express, { Request, Response } from 'express'
+import { Router, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { check, validationResult } from 'express-validator'
 import User from '../models/user'
 
-const router = express.Router()
+const router = Router()
 
 // POST /api/users/register
 router.post(
@@ -20,14 +20,12 @@ router.post(
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.status(400).json({ message: errors.array() })
-      return
     }
     try {
       let user = await User.findOne({ email: req.body.email })
 
       if (user) {
         res.status(400).json({ message: 'User already exists' })
-        return
       }
 
       user = new User(req.body)
@@ -45,12 +43,10 @@ router.post(
         maxAge: 86400000,
       })
 
-      res.status(200).send({ message: 'User registered OK' })
-      return
+      res.status(200).json({ message: 'User registered OK' })
     } catch (error) {
       console.log(error)
       res.status(500).json({ message: 'Something went wrong' })
-      return
     }
   }
 )
