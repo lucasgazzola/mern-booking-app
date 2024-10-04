@@ -50,7 +50,7 @@ const DetailsSection = () => {
         <textarea
           rows={10}
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register('description', { required: 'Name is required' })}
+          {...register('description', { required: 'Description is required' })}
         />
         {errors.description && (
           <span className="text-red-600">{errors.description.message}</span>
@@ -62,7 +62,7 @@ const DetailsSection = () => {
           type="number"
           min={1}
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register('pricePerNight', { required: 'Name is required' })}
+          {...register('pricePerNight', { required: 'Price is required' })}
         />
         {errors.pricePerNight && (
           <span className="text-red-600">{errors.pricePerNight.message}</span>
