@@ -3,7 +3,7 @@ import path from 'node:path'
 import 'dotenv/config'
 
 import cors from 'cors'
-import express from 'express'
+import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 
@@ -39,6 +39,12 @@ app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/my-hotels', myHotelsRoutes)
+
+// Routes at request time
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
+})
+
 app.listen(PORT, () => {
   console.log('Server running on port ' + PORT)
 })

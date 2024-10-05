@@ -2,16 +2,46 @@ import { test, expect } from '@playwright/test'
 
 const UI_URL = 'http://localhost:5173'
 
-test('should allow the user to sign in', async ({ page }) => {})
+test('should allow the user to sign in', async ({ page }) => {
+  await page.goto(UI_URL)
+  await page.getByRole('link', { name: 'Sign In' }).click()
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/')
+  await expect(page.getByRole('heading', { name: 'Sign In' })).toBeVisible()
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click()
+  await page.locator('[name="email"]').fill('1@1.com')
+  await page.locator('[name="password"]').fill('123123')
 
-  // Expects page to have a heading with the name of Installation.
+  await page.getByRole('button', { name: 'Login' }).click()
+
+  await expect(page.getByText('Sign in Successful!')).toBeVisible()
+  await expect(page.getByRole('link', { name: 'My Bookings' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'My Hotels' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Sign Out' })).toBeVisible()
+})
+
+test('should allow the user to register', async ({ page }) => {
+  const testEmail = `test_${Math.random() * 90000}@test.com`
+
+  await page.goto(UI_URL)
+
+  await page.getByRole('link', { name: 'Sign In' }).click()
+
+  await page.getByRole('link', { name: 'Create an account here' }).click()
+
   await expect(
-    page.getByRole('heading', { name: 'Installation' })
+    page.getByRole('heading', { name: 'Create an account' })
   ).toBeVisible()
+
+  await page.locator('[name="firstName"]').fill('test_firstname')
+  await page.locator('[name="lastName"]').fill('test_lastname')
+  await page.locator('[name="email"]').fill(testEmail)
+  await page.locator('[name="password"]').fill('password')
+  await page.locator('[name="confirmPassword"]').fill('password')
+
+  await page.getByRole('button', { name: 'Create Account' }).click()
+
+  await expect(page.getByText('Registration Success!')).toBeVisible()
+  await expect(page.getByRole('link', { name: 'My Bookings' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'My Hotels' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Sign Out' })).toBeVisible()
 })
