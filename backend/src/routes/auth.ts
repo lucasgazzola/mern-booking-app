@@ -36,6 +36,7 @@ router.post(
 
       if (!isMatch) {
         res.status(400).json({ message: 'Invalid credentials' })
+        return
       }
 
       const token = jwt.sign(
@@ -52,7 +53,6 @@ router.post(
 
       res.status(200).json({ userId: user.id })
     } catch (error) {
-      console.log(error)
       res.status(500).json({ message: 'Something went wrong' })
     }
   }
