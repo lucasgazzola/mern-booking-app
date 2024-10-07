@@ -34,7 +34,7 @@ app.use(
     credentials: true,
   })
 )
-app.use(express.static(path.join(__dirname, '../../frontend/dist')))
+app.use(express.static(path.join(__dirname, '../../../frontend/dist')))
 
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
@@ -42,7 +42,7 @@ app.use('/api/my-hotels', myHotelsRoutes)
 
 // Routes at request time
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
+  res.sendFile(path.join(__dirname, '../../../frontend/dist/index.html'))
 })
 
 app.listen(PORT, () => {
